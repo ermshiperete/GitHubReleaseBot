@@ -40,13 +40,15 @@ namespace GitHubReleaseBot.Controllers
 			var secret = Encoding.ASCII.GetBytes(_gitHubWebhookSecret);
 			var payloadBytes = Encoding.ASCII.GetBytes(payload);
 
-			using var hashMethod = new HMACSHA1(secret);
-			var hash = hashMethod.ComputeHash(payloadBytes);
+			using (var hashMethod = new HMACSHA1(secret))
+			{
+				var hash = hashMethod.ComputeHash(payloadBytes);
 
-			var hashString = ToHexString(hash);
-			_logger.LogInformation($"\nhashString={hashString}\nsignature ={signature}");
+				var hashString = ToHexString(hash);
+				_logger.LogInformation($"\nhashString={hashString}\nsignature ={signature}");
 
-			return hashString.Equals(signature);
+				return hashString.Equals(signature);
+			}
 		}
 
 		private static string ToHexString(byte[] bytes)
@@ -71,9 +73,10 @@ namespace GitHubReleaseBot.Controllers
 
 			using (var reader = new StreamReader(Request.Body))
 			{
-				var txt = await reader.ReadToEndAsync();
+				var payload = await reader.ReadToEndAsync();
+				_logger.LogInformation($"payload={payload}");
 
-				if (IsGitHubSignatureValid(txt, gitHubSignature))
+				if (IsGitHubSignatureValid(payload, gitHubSignature))
 				{
 					_logger.LogInformation("Signature is valid");
 					return Ok("works with configured secret!");
