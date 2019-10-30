@@ -49,7 +49,7 @@ namespace GitHubReleaseBot.Controllers
 		private static string ToHexString(byte[] bytes)
 		{
 			var builder = new StringBuilder(bytes.Length * 2);
-			foreach (byte b in bytes)
+			foreach (var b in bytes)
 			{
 				builder.AppendFormat("{0:x2}", b);
 			}
@@ -60,11 +60,11 @@ namespace GitHubReleaseBot.Controllers
 		[HttpPost("")]
 		public async Task<IActionResult> Receive()
 		{
-			Request.Headers.TryGetValue("X-GitHub-Delivery", out StringValues gitHubDeliveryId);
-			Request.Headers.TryGetValue("X-GitHub-Event", out StringValues gitHubEvent);
-			Request.Headers.TryGetValue("X-Hub-Signature", out StringValues gitHubSignature);
+			Request.Headers.TryGetValue("X-GitHub-Delivery", out var gitHubDeliveryId);
+			Request.Headers.TryGetValue("X-GitHub-Event", out var gitHubEvent);
+			Request.Headers.TryGetValue("X-Hub-Signature", out var gitHubSignature);
 
-			_logger.LogInformation("Received GitHub delivery {GitHubDeliveryId} for event {gitHubEvent}", gitHubDeliveryId, gitHubEvent);
+			_logger.LogInformation($"Received GitHub delivery {gitHubDeliveryId} for event {gitHubEvent}");
 
 			using (var reader = new StreamReader(Request.Body))
 			{
@@ -72,6 +72,7 @@ namespace GitHubReleaseBot.Controllers
 
 				if (IsGitHubSignatureValid(txt, gitHubSignature))
 				{
+					_logger.LogInformation("Signature is valid");
 					return Ok("works with configured secret!");
 				}
 			}
