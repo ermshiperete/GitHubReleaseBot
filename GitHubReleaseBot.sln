@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubReleaseBot", "GitHubReleaseBot\GitHubReleaseBot.csproj", "{37BF7A13-94BC-4336-8840-5767B3409E7D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{1B74DE1F-2485-4FAA-AE55-6D55C4F4A720}"
+ProjectSection(SolutionItems) = preProject
+	.editorconfig = .editorconfig
+	.gitignore = .gitignore
+EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37BF7A13-94BC-4336-8840-5767B3409E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37BF7A13-94BC-4336-8840-5767B3409E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37BF7A13-94BC-4336-8840-5767B3409E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37BF7A13-94BC-4336-8840-5767B3409E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
