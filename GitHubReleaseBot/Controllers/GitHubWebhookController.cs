@@ -22,6 +22,7 @@ namespace GitHubReleaseBot.Controllers
 			_logger = logger;
 
 			_gitHubWebhookSecret = Environment.GetEnvironmentVariable("GitHubWebhookSecret");
+			_logger.LogInformation($"secret={_gitHubWebhookSecret}");
 		}
 
 		private bool IsGitHubSignatureValid(string payload, string signatureWithPrefix)
@@ -31,6 +32,7 @@ namespace GitHubReleaseBot.Controllers
 			if (string.IsNullOrWhiteSpace(signatureWithPrefix))
 				throw new ArgumentNullException(nameof(signatureWithPrefix));
 
+			_logger.LogInformation($"signature={signatureWithPrefix}, prefix={Sha1Prefix}");
 			if (!signatureWithPrefix.StartsWith(Sha1Prefix, StringComparison.OrdinalIgnoreCase))
 				return false;
 
@@ -42,6 +44,7 @@ namespace GitHubReleaseBot.Controllers
 			var hash = hashMethod.ComputeHash(payloadBytes);
 
 			var hashString = ToHexString(hash);
+			_logger.LogInformation($"\nhashString={hashString}\nsignature ={signature}");
 
 			return hashString.Equals(signature);
 		}
