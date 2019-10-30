@@ -21,7 +21,7 @@ namespace GitHubReleaseBot.Controllers
 		{
 			_logger = logger;
 
-			_gitHubWebhookSecret = configuration["GitHubWebhookSecret"];
+			_gitHubWebhookSecret = Environment.GetEnvironmentVariable("GitHubWebhookSecret");
 		}
 
 		private bool IsGitHubSignatureValid(string payload, string signatureWithPrefix)
