@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace GitHubReleaseBot
 {
@@ -6,8 +7,11 @@ namespace GitHubReleaseBot
 	{
 		private static void Main(string[] args)
 		{
-			TcpHelper.StartServer(80);
-			TcpHelper.Listen();
+			CreateHostBuilder(args).Build().Run();
 		}
+
+		private static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+				.ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 	}
 }
